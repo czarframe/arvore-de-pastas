@@ -1,3 +1,6 @@
+import os
+
+
 class Tree:
     def __init__(self, name):
         self._children = []
@@ -31,3 +34,13 @@ class Tree:
         print(self.get_name())
         for child in self._children:
             child.print_tree()
+
+    def create_folder(self, parent=""):
+        if parent:
+            path = os.path.join(self.get_name(), parent)
+        else:
+            path = self.get_name()
+        os.makedirs(path, exist_ok=True)
+        for child in self._children:
+            parent = os.path.join(path, child.get_name())
+            child.create_folder(parent)
